@@ -2,26 +2,25 @@ package com.springlibrabryapi.librarycontrol.models;
 
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "author")
-public class AuthorModel {
+public class AuthorsModel {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private java.util.UUID id;
     @Column(nullable = false, length = 50)
     private String name;
     @Column(nullable = false, length = 50)
     private String picture;
 
-    public AuthorModel() {
+    public AuthorsModel() {
 
     }
 
-    public AuthorModel(String name, String picture) {
+    public AuthorsModel(String name, String picture) {
         this.name = name;
         this.picture = picture;
     }
@@ -41,4 +40,6 @@ public class AuthorModel {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+
 }

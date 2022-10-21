@@ -3,7 +3,7 @@ package com.springlibrabryapi.librarycontrol.controllers;
 
 import com.springlibrabryapi.librarycontrol.dto.AuthorDto;
 
-import com.springlibrabryapi.librarycontrol.models.AuthorModel;
+import com.springlibrabryapi.librarycontrol.models.AuthorsModel;
 import com.springlibrabryapi.librarycontrol.services.LibraryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -32,20 +31,20 @@ public class LibraryControler {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Author already registered");
         }
 
-    var authorModel = new AuthorModel();
+    var authorModel = new AuthorsModel();
     BeanUtils.copyProperties(authorDto, authorModel);
     return ResponseEntity.status(HttpStatus.CREATED).body(libraryService.save(authorModel));
 
     }
 
     @GetMapping
-    public ResponseEntity<List<AuthorModel>> getAllAuthors(){
+    public ResponseEntity<List<AuthorsModel>> getAllAuthors(){
         return ResponseEntity.status(HttpStatus.OK).body(libraryService.findAll());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") UUID id){
-        Optional<AuthorModel> parkingSpotModelOptional = libraryService.findById(id);
+    public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") java.util.UUID id){
+        Optional<AuthorsModel> parkingSpotModelOptional = libraryService.findById(id);
         if(!parkingSpotModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Author not found");
         }
@@ -54,8 +53,8 @@ public class LibraryControler {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateAuthor(@PathVariable(value = "id") UUID id, @RequestBody @Valid AuthorDto authorDto){
-        Optional<AuthorModel> libraryModelOptional = libraryService.findById(id);
+    public ResponseEntity<Object> updateAuthor(@PathVariable(value = "id") java.util.UUID id, @RequestBody @Valid AuthorDto authorDto){
+        Optional<AuthorsModel> libraryModelOptional = libraryService.findById(id);
         if(!libraryModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Author not found");
         }

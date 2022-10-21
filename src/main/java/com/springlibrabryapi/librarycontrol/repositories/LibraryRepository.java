@@ -1,13 +1,11 @@
 package com.springlibrabryapi.librarycontrol.repositories;
 
-import com.springlibrabryapi.librarycontrol.models.AuthorModel;
+import com.springlibrabryapi.librarycontrol.models.AuthorsModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface LibraryRepository extends JpaRepository<AuthorModel, UUID> {
+public interface LibraryRepository extends JpaRepository<AuthorsModel, java.util.UUID> {
 
     boolean existsByName(String name);
 

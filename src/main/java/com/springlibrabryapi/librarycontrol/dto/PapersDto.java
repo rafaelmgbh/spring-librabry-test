@@ -1,35 +1,24 @@
-package com.springlibrabryapi.librarycontrol.models;
+package com.springlibrabryapi.librarycontrol.dto;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
-@Entity
-@Table(name = "papers")
-public class PapersModel {
-    private static final long serialVersionUID = 1L;
+public class PapersDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(nullable = false, length = 50)
+    @NotBlank
     private String category;
-    @Column(nullable = false, length = 50)
+    @NotBlank
     private String sumary;
-    @Column
+    @NotBlank
     private String title;
-    @Column(nullable = false, length = 50)
+    @NotBlank
     private String firstParagraph;
 
-    @Column(nullable = false)
     private UUID author_id;
 
 
-    @ManyToOne
-    @JoinColumn(name = "author_id", insertable = false, updatable = false)
-    private AuthorsModel author;
-
-    public PapersModel() {
-
+    public String getTitle() {
+        return title;
     }
 
     public String getCategory() {
@@ -46,10 +35,6 @@ public class PapersModel {
 
     public void setSumary(String sumary) {
         this.sumary = sumary;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public void setTitle(String title) {
@@ -70,13 +55,5 @@ public class PapersModel {
 
     public void setAuthor_id(UUID author_id) {
         this.author_id = author_id;
-    }
-
-    public AuthorsModel getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(AuthorsModel author) {
-        this.author = author;
     }
 }

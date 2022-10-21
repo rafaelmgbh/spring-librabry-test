@@ -1,14 +1,13 @@
 package com.springlibrabryapi.librarycontrol.services;
 
 
-import com.springlibrabryapi.librarycontrol.models.AuthorModel;
+import com.springlibrabryapi.librarycontrol.models.AuthorsModel;
 import com.springlibrabryapi.librarycontrol.repositories.LibraryRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class LibraryService {
@@ -19,7 +18,7 @@ public class LibraryService {
         this.libraryRepository = libraryRepository;
     }
 
-    public List<AuthorModel> findAll(){
+    public List<AuthorsModel> findAll(){
         return libraryRepository.findAll();
     };
 
@@ -28,17 +27,17 @@ public class LibraryService {
     }
 
     @Transactional
-    public AuthorModel save(AuthorModel authorModel) {
+    public AuthorsModel save(AuthorsModel authorModel) {
         return libraryRepository.save(authorModel);
     }
 
     @Transactional
-    public Optional<AuthorModel> findById(UUID id) {
+    public Optional<AuthorsModel> findById(java.util.UUID id) {
         return libraryRepository.findById(id);
 
     }
 
-    public void delete(AuthorModel authorModel) {
+    public void delete(AuthorsModel authorModel) {
         libraryRepository.delete(authorModel);
     }
 }
