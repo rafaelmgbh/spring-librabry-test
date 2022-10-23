@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +26,7 @@ public class LibraryControler {
         this.libraryService = libraryService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Object> saveAuthor(@RequestBody @Valid AuthorDto authorDto) {
         if (libraryService.existsByName(authorDto.getName())) {
@@ -37,6 +39,7 @@ public class LibraryControler {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public ResponseEntity<List<AuthorsModel>> getAllAuthors(){
         return ResponseEntity.status(HttpStatus.OK).body(libraryService.findAll());
