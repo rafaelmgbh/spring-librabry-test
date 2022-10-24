@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/library")
+@RequestMapping()
 public class LibraryControler {
     final LibraryService libraryService;
 
@@ -25,7 +25,7 @@ public class LibraryControler {
         this.libraryService = libraryService;
     }
 
-    @PostMapping
+    @PostMapping("/authors/CADASTRO")
     public ResponseEntity<Object> saveAuthor(@RequestBody @Valid AuthorDto authorDto) {
         if (libraryService.existsByName(authorDto.getName())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Author already registered");
@@ -37,12 +37,12 @@ public class LibraryControler {
 
     }
 
-    @GetMapping
+    @GetMapping("/authors")
     public ResponseEntity<List<AuthorsModel>> getAllAuthors(){
         return ResponseEntity.status(HttpStatus.OK).body(libraryService.findAll());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/authors/{id}")
     public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") java.util.UUID id){
         Optional<AuthorsModel> parkingSpotModelOptional = libraryService.findById(id);
         if(!parkingSpotModelOptional.isPresent()){
@@ -52,7 +52,7 @@ public class LibraryControler {
         return ResponseEntity.status(HttpStatus.OK).body("Author deleted");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/authors/ATUALIZACAO/{id}")
     public ResponseEntity<Object> updateAuthor(@PathVariable(value = "id") java.util.UUID id, @RequestBody @Valid AuthorDto authorDto){
         Optional<AuthorsModel> libraryModelOptional = libraryService.findById(id);
         if(!libraryModelOptional.isPresent()){
