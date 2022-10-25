@@ -43,7 +43,7 @@ public class PapersControler {
     }
 
     @PutMapping("/papers/ATUALIZACAO/{id}")
-    public ResponseEntity<Object> updatePaper(@PathVariable(value = "id")UUID id, @RequestBody @Valid List<PapersDto> papersDto){
+    public ResponseEntity<Object> updatePaper(@PathVariable(value = "id")UUID id, @RequestBody @Valid PapersDto papersDto){
         Optional<PapersModel> papersModelOptional = papersService.findById(id);
         if(!papersModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paper not found");
