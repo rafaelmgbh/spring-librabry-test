@@ -2,10 +2,11 @@ package com.springlibrabryapi.librarycontrol.models;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "author")
-public class AuthorsModel {
+public class AuthorsModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

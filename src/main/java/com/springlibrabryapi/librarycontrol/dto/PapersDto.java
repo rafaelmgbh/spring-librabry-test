@@ -1,7 +1,11 @@
 package com.springlibrabryapi.librarycontrol.dto;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
+
+
 
 public class PapersDto {
 

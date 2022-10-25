@@ -34,7 +34,6 @@ public class LibraryService {
     @Transactional
     public Optional<AuthorsModel> findById(java.util.UUID id) {
         return libraryRepository.findById(id);
-
     }
 
     public void delete(AuthorsModel authorModel) {

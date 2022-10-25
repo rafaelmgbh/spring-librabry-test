@@ -12,6 +12,8 @@ public class AuthorDto {
     @Size(max = 50)
     private String picture;
 
+
+
     public String getName() {
         return name;
     }

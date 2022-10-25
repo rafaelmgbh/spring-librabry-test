@@ -43,12 +43,12 @@ public class LibraryControler {
     }
 
     @DeleteMapping("/authors/{id}")
-    public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") java.util.UUID id){
-        Optional<AuthorsModel> parkingSpotModelOptional = libraryService.findById(id);
-        if(!parkingSpotModelOptional.isPresent()){
+    public ResponseEntity<Object> deleteAuthor(@PathVariable(value = "id") java.util.UUID id){
+        Optional<AuthorsModel> authorSpotModelOptional = libraryService.findById(id);
+        if(!authorSpotModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Author not found");
         }
-        libraryService.delete(parkingSpotModelOptional.get());
+        libraryService.delete(authorSpotModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Author deleted");
     }
 
