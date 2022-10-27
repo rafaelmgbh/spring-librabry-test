@@ -6,7 +6,6 @@ import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Bucket4j;
 import io.github.bucket4j.Refill;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -18,18 +17,19 @@ import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 public class RatedLimitServices {
 
     final Bucket bucket;
-    //Melhorar a visibilidade as vezes o controle da variavel esta em conflito com o bucket
+
 
     public RatedLimitServices() {
-        Bandwidth limit = Bandwidth.classic(10, Refill.greedy(10, Duration.ofMinutes(1)));
+        Bandwidth limit = Bandwidth.classic(10, Refill.intervally(10, Duration.ofMinutes(1)));
+        //greedy , recarrega o token o mais rapido possivel .
+        //intervally , recarrega o token no final do ciclo.
         this.bucket = Bucket4j.builder().addLimit(limit).build();
     }
 
 
     public Bucket getBucket() {
-        LOGGER.info("Token consumption performed successfully !");
-        LOGGER.info(bucket.getAvailableTokens() + " Tokens left");
-        return bucket;
+        LOGGER.info(this.bucket.getAvailableTokens() + " Tokens left");
+        return this.bucket;
     }
 
 
