@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,7 +34,7 @@ public class LibraryControler {
         this.ratedLimitServices = ratedLimitServices;
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/authors/CADASTRO")
     public ResponseEntity<Object> saveAuthor(@RequestBody @Valid AuthorDto authorDto) {
         if (ratedLimitServices.getBucket().tryConsume(1)) {
@@ -49,7 +50,7 @@ public class LibraryControler {
         }
 
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/authors")
     public ResponseEntity<List<AuthorsModel>> getAllAuthors() {
 
@@ -62,7 +63,7 @@ public class LibraryControler {
 
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/authors/{id}")
     public ResponseEntity<Object> deleteAuthor(@PathVariable(value = "id") java.util.UUID id) {
         Optional<AuthorsModel> authorSpotModelOptional = libraryService.findById(id);
@@ -77,7 +78,7 @@ public class LibraryControler {
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Too many requests");
         }
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/authors/ATUALIZACAO/{id}")
     public ResponseEntity<Object> updateAuthor(@PathVariable(value = "id") java.util.UUID id, @RequestBody @Valid AuthorDto authorDto) {
         Optional<AuthorsModel> libraryModelOptional = libraryService.findById(id);
