@@ -1,6 +1,7 @@
 package com.springlibrabryapi.librarycontrol.controllers;
 
 import com.springlibrabryapi.librarycontrol.dto.UserDto;
+import com.springlibrabryapi.librarycontrol.models.RoleModel;
 import com.springlibrabryapi.librarycontrol.models.UserModel;
 import com.springlibrabryapi.librarycontrol.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,11 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
        
+    }
+
+    @GetMapping("/roles")
+    public ResponseEntity<List<RoleModel>> getAllRoles() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllRoles());
     }
 
 

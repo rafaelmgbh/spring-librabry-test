@@ -1,7 +1,9 @@
 package com.springlibrabryapi.librarycontrol.services;
 
 import com.springlibrabryapi.librarycontrol.dto.UserDto;
+import com.springlibrabryapi.librarycontrol.models.RoleModel;
 import com.springlibrabryapi.librarycontrol.models.UserModel;
+import com.springlibrabryapi.librarycontrol.repositories.RolesRepository;
 import com.springlibrabryapi.librarycontrol.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,11 @@ public class UserService {
 
     final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    final RolesRepository rolesRepository;
+
+    public UserService(UserRepository userRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
+        this.rolesRepository = rolesRepository;
     }
 
     public List<UserModel> findAll() {
@@ -33,11 +38,16 @@ public class UserService {
         // Criptografando a senha
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         userModel.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+
         return save(userModel);
     }
 
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    public List<RoleModel> getAllRoles() {
+        return rolesRepository.findAll();
     }
 }
 

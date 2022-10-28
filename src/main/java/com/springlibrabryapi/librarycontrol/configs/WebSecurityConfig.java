@@ -3,6 +3,7 @@ package com.springlibrabryapi.librarycontrol.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,7 +25,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         // Configurações de autorização de acesso
-        http.httpBasic().and().authorizeHttpRequests().anyRequest().authenticated().and().csrf().disable();
+
+
+        http.httpBasic()
+                .and()
+                .authorizeHttpRequests()
+                .antMatchers(HttpMethod.GET , "/users/**").permitAll()
+                .antMatchers(HttpMethod.DELETE , "/authors/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST , "/authors/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT , "/authors/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET , "/authors/**").permitAll()
+
+                .anyRequest()
+                .authenticated()
+                .and()
+                .csrf()
+                .disable();
     }
 
     @Override

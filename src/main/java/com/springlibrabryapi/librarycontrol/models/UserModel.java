@@ -6,8 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -16,14 +15,20 @@ public class UserModel implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private java.util.UUID id;
+    private java.util.UUID userId;
     private String name;
     private String username;
     private String password;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<RoleModel> roles ;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles;
     }
 
     @Override
@@ -56,12 +61,12 @@ public class UserModel implements Serializable, UserDetails {
         return true;
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -78,5 +83,13 @@ public class UserModel implements Serializable, UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<RoleModel> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleModel> roles) {
+        this.roles = roles;
     }
 }
