@@ -35,5 +35,9 @@ public class UserService {
         userModel.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         return save(userModel);
     }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }
 

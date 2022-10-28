@@ -30,6 +30,9 @@ public class UserController {
     
     @PostMapping()
     public ResponseEntity<Object> saveUser(@RequestBody UserDto userDto) {
+        if(userService.existsByUsername(userDto.getUsername())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already registered");
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
        
