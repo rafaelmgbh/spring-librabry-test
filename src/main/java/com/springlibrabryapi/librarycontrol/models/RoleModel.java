@@ -37,6 +37,11 @@ public class RoleModel implements Serializable, GrantedAuthority {
     public String getAuthority() {
         return this.roleName.toString();
     }
+
+
+    public void setRole(String role) {
+        this.roleName = RoleName.valueOf(role);
+    }
 }
 
 
