@@ -28,7 +28,7 @@ public class RatedLimitServices {
 
 
     public Bucket getBucket() {
-        LOGGER.info(this.bucket.getAvailableTokens() + " Tokens left");
+
         return this.bucket;
     }
 
