@@ -39,4 +39,9 @@ public class LibraryService {
     public void delete(AuthorsModel authorModel) {
         libraryRepository.delete(authorModel);
     }
+
+    @Transactional
+    public Object findByNameContainingIgnoreCase(String name) {
+        return libraryRepository.findByNameContainingIgnoreCase(name);
+    }
 }
