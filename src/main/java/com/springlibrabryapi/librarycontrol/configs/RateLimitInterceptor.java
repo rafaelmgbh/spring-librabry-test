@@ -16,6 +16,10 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
     private RatedLimitServices ratedLimitServices;
 
+
+    final int TOKENS_CONSUME = 1;
+    //TOKENS_CONSUME é a quantidade de tokens que o bucket ira consumir
+
     public RateLimitInterceptor(RatedLimitServices ratedLimitServices) {
         this.ratedLimitServices = ratedLimitServices;
     }
@@ -27,7 +31,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
         Bucket bucket = ratedLimitServices.getBucket();
         //verifica se o bucket esta cheio , se estiver cheio retorna um erro 429
-        if (bucket.tryConsume(1)) {
+        if (bucket.tryConsume(TOKENS_CONSUME)) {
             log.info("Request Consumed . " + bucket.getAvailableTokens() + " available tokens");
             return true;
         } else {
