@@ -1,15 +1,13 @@
 package com.springlibrabryapi.librarycontrol.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 public class AuthorDto {
 
 
-    @NotBlank
+
     private String name;
-    @NotBlank
-    @Size(max = 50)
+
+
     private String picture;
 
 
