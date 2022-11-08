@@ -1,21 +1,19 @@
 package com.springlibrabryapi.librarycontrol.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 
 
 public class PapersDto {
 
-    @NotBlank
+
     private String category;
-    @NotBlank
+
     private String sumary;
-    @NotBlank
+
     private String title;
-    @NotBlank
+
     private String firstParagraph;
 
     private UUID author_id;

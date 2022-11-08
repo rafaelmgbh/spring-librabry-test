@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class PapersControler {
     }
 
     @PostMapping("/papers/CADASTRO")
-    public ResponseEntity<Object> savePapers(@RequestBody @Valid PapersDto papersDto) {
+    public ResponseEntity<Object> savePapers(@RequestBody PapersDto papersDto) {
 
         if (papersService.existsByTitle(papersDto.getTitle())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Papers already registered");
@@ -49,7 +49,7 @@ public class PapersControler {
     }
 
     @PutMapping("/papers/ATUALIZACAO/{id}")
-    public ResponseEntity<Object> updatePaper(@PathVariable(value = "id") UUID id, @RequestBody @Valid PapersDto papersDto) {
+    public ResponseEntity<Object> updatePaper(@PathVariable(value = "id") UUID id, @RequestBody PapersDto papersDto) {
         Optional<PapersModel> papersModelOptional = papersService.findById(id);
 
         if (!papersModelOptional.isPresent()) {
