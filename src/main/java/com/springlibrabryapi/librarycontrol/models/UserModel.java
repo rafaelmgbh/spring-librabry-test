@@ -5,6 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -17,7 +19,7 @@ public class UserModel implements UserDetails , Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID id_user;
 
     @Column(name="user_name", unique = true)
     private String userName;
@@ -44,18 +46,11 @@ public class UserModel implements UserDetails , Serializable {
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name= "users_permission", joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_permission"))
-    private List<PermissionModel> permissions;
+    @JoinTable(name= "users_permission", joinColumns = {@JoinColumn(name = "id_user")},
+            inverseJoinColumns ={ @JoinColumn(name = "id_permission")})
+    private List<PermissionModelV2> roles;
 
 
-    public List<String> getRoles(){
-        List<String> roles = new ArrayList<>();
-        for (PermissionModel permission : permissions){
-            roles.add(permission.getDescription());
-        }
-        return roles;
-    }
     public UserModel() {
     }
 
@@ -69,7 +64,7 @@ public class UserModel implements UserDetails , Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.permissions;
+        return this.roles;
     }
 
     @Override
@@ -102,12 +97,12 @@ public class UserModel implements UserDetails , Serializable {
         return this.enabled;
     }
 
-    public UUID getId() {
-        return this.id;
+    public UUID getId_user() {
+        return this.id_user;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setId_user(UUID id) {
+        this.id_user = id;
     }
 
     public String getUserName() {
@@ -146,12 +141,12 @@ public class UserModel implements UserDetails , Serializable {
         this.enabled = enabled;
     }
 
-    public List<PermissionModel> getPermissions() {
-        return permissions;
+    public List<PermissionModelV2> getPermissions() {
+        return roles;
     }
 
-    public void setPermissions(List<PermissionModel> permissions) {
-        this.permissions = permissions;
+    public void setPermissions(List<PermissionModelV2> permissions) {
+        this.roles = permissions;
     }
 
     @Override
@@ -165,17 +160,25 @@ public class UserModel implements UserDetails , Serializable {
         if (accountNonLocked != userModel.accountNonLocked) return false;
         if (credentialsNonExpired != userModel.credentialsNonExpired) return false;
         if (enabled != userModel.enabled) return false;
-        if (!Objects.equals(id, userModel.id)) return false;
+        if (!Objects.equals(id_user, userModel.id_user)) return false;
         if (!Objects.equals(userName, userModel.userName)) return false;
         if (!Objects.equals(email, userModel.email)) return false;
         if (!Objects.equals(fullName, userModel.fullName)) return false;
         if (!Objects.equals(password, userModel.password)) return false;
-        return Objects.equals(permissions, userModel.permissions);
+        return Objects.equals(roles, userModel.roles);
+    }
+
+    public List<PermissionModelV2> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<PermissionModelV2> roles) {
+        this.roles = roles;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id_user != null ? id_user.hashCode() : 0;
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
@@ -184,7 +187,8 @@ public class UserModel implements UserDetails , Serializable {
         result = 31 * result + (accountNonLocked ? 1 : 0);
         result = 31 * result + (credentialsNonExpired ? 1 : 0);
         result = 31 * result + (enabled ? 1 : 0);
-        result = 31 * result + (permissions != null ? permissions.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
+
 }

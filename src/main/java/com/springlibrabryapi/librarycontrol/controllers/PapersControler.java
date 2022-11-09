@@ -8,6 +8,7 @@ import com.springlibrabryapi.librarycontrol.services.RatedLimitServices;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class PapersControler {
         this.papersService = papersService;
         this.ratedLimitServices = ratedLimitServices;
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/papers/CADASTRO")
     public ResponseEntity<Object> savePapers(@RequestBody PapersDto papersDto) {
 
@@ -41,13 +42,14 @@ public class PapersControler {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/papers")
     public ResponseEntity<List<PapersModel>> getAllPapers() {
 
         return ResponseEntity.status(HttpStatus.OK).body(papersService.findAll());
 
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/papers/ATUALIZACAO/{id}")
     public ResponseEntity<Object> updatePaper(@PathVariable(value = "id") UUID id, @RequestBody PapersDto papersDto) {
         Optional<PapersModel> papersModelOptional = papersService.findById(id);
@@ -60,7 +62,7 @@ public class PapersControler {
         return ResponseEntity.status(HttpStatus.OK).body(papersService.save(papersModel));
 
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/papers/{id}")
     public ResponseEntity<Object> deletePaper(@PathVariable(value = "id") java.util.UUID id) {
         Optional<PapersModel> papersModelOptional = papersService.findById(id);

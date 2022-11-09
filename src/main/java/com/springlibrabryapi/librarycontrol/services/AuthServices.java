@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 @Service
 public class AuthServices {
 
@@ -31,7 +33,7 @@ public class AuthServices {
             var user = userRepository.findByEmail(email);
             var token = new TokenDto();
             if (user != null){
-                token = jwtTokenProvider.createToken(email, user.getRoles());
+                token = jwtTokenProvider.createToken(email, Collections.singletonList(user.getRoles().toString()));
             } else {
                 throw new Exception("User not found");
             }

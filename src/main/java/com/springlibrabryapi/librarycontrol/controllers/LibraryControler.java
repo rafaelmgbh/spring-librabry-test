@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public class LibraryControler {
 
 
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/authors")
     public ResponseEntity<Object> saveAuthor(@RequestBody AuthorDto authorDto) {
         if (libraryService.existsByName(authorDto.getName())) {
@@ -46,7 +48,7 @@ public class LibraryControler {
 
     }
 
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/authors")
     public ResponseEntity<List<AuthorsModel>> getAllAuthors() {
 
@@ -55,6 +57,7 @@ public class LibraryControler {
     }
 
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/authors/{name}")
     public ResponseEntity<Object> getAuthorByName(@PathVariable String name) {
 
@@ -68,7 +71,7 @@ public class LibraryControler {
 
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/authors/{id}")
     public ResponseEntity<Object> deleteAuthor(@PathVariable(value = "id") java.util.UUID id) {
         Optional<AuthorsModel> authorSpotModelOptional = libraryService.findById(id);
@@ -81,7 +84,7 @@ public class LibraryControler {
 
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/authors/ATUALIZACAO/{id}")
     public ResponseEntity<Object> updateAuthor(@PathVariable(value = "id") java.util.UUID id, @RequestBody AuthorDto authorDto) {
         Optional<AuthorsModel> libraryModelOptional = libraryService.findById(id);
