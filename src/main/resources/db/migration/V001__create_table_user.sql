@@ -1,6 +1,6 @@
 create table if not exists users
 (
-    id                      uuid not null
+    id_user                      uuid not null
         primary key
         unique,
     user_name               varchar(255) default NULL,
