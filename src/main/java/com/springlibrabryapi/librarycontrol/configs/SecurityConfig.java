@@ -50,12 +50,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
+                        //esse método é responsável por liberar o acesso a alguns endpoints
                         "/auth/signin",
                         "/auth/refresh",
                         "/api-docs/**",
                         "/swagger-ui.html**"
                 ).permitAll()
+                //esse método é responsável por bloquear o acesso a alguns endpoints
                 .antMatchers("/authors").authenticated()
+                //esse método é responsável por configurar o filtro de autenticação
                 .antMatchers("/users").denyAll()
                 .and()
                 .cors()
