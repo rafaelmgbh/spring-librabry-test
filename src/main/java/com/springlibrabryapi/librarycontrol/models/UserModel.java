@@ -51,7 +51,7 @@ public class UserModel implements UserDetails , Serializable {
 
     public List<String> getRoles(){
         List<String> roles = new ArrayList<>();
-        for (PermissionModel permission : this.permissions){
+        for (PermissionModel permission : permissions){
             roles.add(permission.getDescription());
         }
         return roles;
@@ -95,7 +95,7 @@ public class UserModel implements UserDetails , Serializable {
     }
 
     public UUID getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(UUID id) {
@@ -103,7 +103,7 @@ public class UserModel implements UserDetails , Serializable {
     }
 
     public String getUserName() {
-        return userName;
+        return this.userName;
     }
 
     public void setUserName(String userName) {
@@ -111,7 +111,7 @@ public class UserModel implements UserDetails , Serializable {
     }
 
     public String getFullName() {
-        return fullName;
+        return this.fullName;
     }
 
     public void setFullName(String fullName) {
