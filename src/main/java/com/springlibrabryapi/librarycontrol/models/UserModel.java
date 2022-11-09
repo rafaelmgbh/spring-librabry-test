@@ -7,10 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -24,6 +21,9 @@ public class UserModel implements UserDetails , Serializable {
 
     @Column(name="user_name", unique = true)
     private String userName;
+
+    @Column(name="email", unique = true)
+    private String email;
 
     @Column(name="full_name")
     private String fullName;
@@ -57,6 +57,14 @@ public class UserModel implements UserDetails , Serializable {
         return roles;
     }
     public UserModel() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -146,5 +154,37 @@ public class UserModel implements UserDetails , Serializable {
         this.permissions = permissions;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        UserModel userModel = (UserModel) o;
+
+        if (accountNonExpired != userModel.accountNonExpired) return false;
+        if (accountNonLocked != userModel.accountNonLocked) return false;
+        if (credentialsNonExpired != userModel.credentialsNonExpired) return false;
+        if (enabled != userModel.enabled) return false;
+        if (!Objects.equals(id, userModel.id)) return false;
+        if (!Objects.equals(userName, userModel.userName)) return false;
+        if (!Objects.equals(email, userModel.email)) return false;
+        if (!Objects.equals(fullName, userModel.fullName)) return false;
+        if (!Objects.equals(password, userModel.password)) return false;
+        return Objects.equals(permissions, userModel.permissions);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (accountNonExpired ? 1 : 0);
+        result = 31 * result + (accountNonLocked ? 1 : 0);
+        result = 31 * result + (credentialsNonExpired ? 1 : 0);
+        result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + (permissions != null ? permissions.hashCode() : 0);
+        return result;
+    }
 }

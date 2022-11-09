@@ -18,7 +18,7 @@ public class AuthController {
 
     @PostMapping(value="/signin")
     public ResponseEntity sigin(@RequestBody AccountCredentialsDto data){
-        if (data.getUsername() == null || data.getPassword() == null){
+        if (data.getEmail() == null || data.getPassword() == null){
             return ResponseEntity.badRequest().body("Username or password is null");
         }
         var token = authServices.sigin(data);

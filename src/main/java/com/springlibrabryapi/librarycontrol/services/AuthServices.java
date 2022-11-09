@@ -23,15 +23,15 @@ public class AuthServices {
 
     public ResponseEntity sigin(AccountCredentialsDto data){
         try {
-            var username = data.getUsername();
+            var email = data.getEmail();
             var password = data.getPassword();
 
             authenticationManager.authenticate(new org.springframework.security.authentication
-                    .UsernamePasswordAuthenticationToken(username, password));
-            var user = userRepository.findByUsername(username);
+                    .UsernamePasswordAuthenticationToken(email, password));
+            var user = userRepository.findByEmail(email);
             var token = new TokenDto();
             if (user != null){
-                token = jwtTokenProvider.createToken(username, user.getRoles());
+                token = jwtTokenProvider.createToken(email, user.getRoles());
             } else {
                 throw new Exception("User not found");
             }
