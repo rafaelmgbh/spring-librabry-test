@@ -22,6 +22,8 @@ public class WebSecurityConfigV2 {
         http.httpBasic()
                 .and()
                 .authorizeHttpRequests()
+                .antMatchers( "/swagger-ui/**",
+                        "/api-docs/**").permitAll()
 //                .antMatchers(HttpMethod.GET , "/users/**").permitAll()
 //                .antMatchers(HttpMethod.DELETE , "/authors/**").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.POST , "/authors/**").hasRole("ADMIN")

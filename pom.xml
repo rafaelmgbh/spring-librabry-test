@@ -59,12 +59,13 @@
 			<version>9.6.0</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.12</version>
 		</dependency>
 
 	</dependencies>

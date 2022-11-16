@@ -6,6 +6,8 @@ import com.springlibrabryapi.librarycontrol.models.RoleModel;
 import com.springlibrabryapi.librarycontrol.models.UserModel;
 import com.springlibrabryapi.librarycontrol.models.UserRoleModel;
 import com.springlibrabryapi.librarycontrol.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,12 +30,28 @@ public class UserController {
 
     }
 
+    @Operation(summary = "Get all users", description = "Get all users", tags = {"Users"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "successful operation"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")})
     @GetMapping()
     public ResponseEntity<List<UserModel>> getAllUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
 
+    @Operation(summary = "Create a new user", description = "Create a new user", tags = {"Users"})
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "successful operation"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")})
     @PostMapping()
     public ResponseEntity<Object> saveUser(@RequestBody UserDto userDto) {
         if (userService.existsByUsername(userDto.getUsername())) {
@@ -43,6 +61,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
 
     }
+
 
     @GetMapping("/roles")
     public ResponseEntity<List<RoleModel>> getAllRoles() {
